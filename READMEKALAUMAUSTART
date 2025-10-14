@@ -1,0 +1,7 @@
+kalau mau start do this on the terminal:
+cd dprd-disposisi (masuk ke folder file yang ke2 bukan folder yang pertama )
+npm install
+npm run dev (sekali ja kalau sudah selesai downlodad breeze)
+kalau sudah download breeze mdo this : 
+php artisan serve
+

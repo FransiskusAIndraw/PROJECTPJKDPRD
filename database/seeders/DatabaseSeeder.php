@@ -15,9 +15,24 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        \App\Models\User::factory()->create([
+        'nama_lengkap' => 'Admin System',
+        'email' => 'admin@example.com',
+        'password' => Hash::make('password'),
+        'roles' => 'admin',
         ]);
+
+         // Create additional users
+    \App\Models\User::factory(10)->create();
+
+    // Create fake surat masuk with relationships
+    \App\Models\SuratMasuk::factory(20)
+        ->has(\App\Models\Disposisi::factory(2))
+        ->has(\App\Models\Arsip::factory(1))
+        ->create();
+
+    // Add logs and notifications
+    \App\Models\LogAktivitas::factory(30)->create();
+    \App\Models\Notifikasi::factory(30)->create();
     }
 }

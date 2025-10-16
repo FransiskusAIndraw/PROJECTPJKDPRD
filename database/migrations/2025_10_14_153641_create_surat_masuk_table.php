@@ -12,15 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('surat_masuk', function (Blueprint $table) {
-            $table->id();
-            $table->string('no_surat')->unique();
-            $table->date('tgl_surat');
-            $table->string('pengirim');
-            $table->string('perihal');
-            $table->string('file_path');
-            $table->enum('status_surat', ['baru', 'diproses', 'selesai'])->default('baru');
-            $table->timestamps();
-        });
+    $table->id();
+    $table->string('nomor_surat');
+    $table->date('tanggal_surat');
+    $table->string('pengirim');
+    $table->string('perihal');
+    $table->string('file_surat'); // uploaded PDF
+    $table->enum('status', ['draft', 'reviewed', 'disposisi', 'completed'])->default('draft');
+    $table->foreignId('created_by')->constrained('users')->onDelete('cascade'); // TU Sekre
+    $table->foreignId('reviewed_by')->nullable()->constrained('users')->nullOnDelete(); // TU Sekwan
+    $table->timestamps();
+});
     }
 
     /**

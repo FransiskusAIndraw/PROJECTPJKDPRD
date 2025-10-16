@@ -51,4 +51,25 @@ class User extends Authenticatable
     {
         return $this->role === $role;
     }
+
+    public function suratMasukDibuat()
+{
+    return $this->hasMany(SuratMasuk::class, 'created_by');
+}
+
+public function suratMasukDireview()
+{
+    return $this->hasMany(SuratMasuk::class, 'reviewed_by');
+}
+
+public function disposisiDibuat()
+{
+    return $this->hasMany(Disposisi::class, 'from_user_id');
+}
+
+public function disposisiDiterima()
+{
+    return $this->hasMany(Disposisi::class, 'to_user_id');
+}
+
 }

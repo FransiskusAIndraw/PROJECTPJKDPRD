@@ -30,6 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:pimpinan')->get('/pimpinan/dashboard', [PimpinanController::class, 'dashboard'])->name('pimpinan.dashboard');
     Route::middleware('role:staff')->get('/staff/dashboard', [StaffController::class, 'dashboard'])->name('staff.dashboard');
 
+    Route::middleware(['auth', 'role:admin'])->group(function () {
+        Route::resource('/admin/surat-masuk', SuratMasukController::class);
+    });
+
+
         // CRUD Surat Masuk (Incoming Mail)
     Route::resource('/admin/surat-masuk', SuratMasukController::class);
 });

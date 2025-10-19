@@ -5,9 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SuratMasuk;
 
-
 class TUSekwanController extends Controller
 {
+    
+
+    // List all surat masuk (for monitoring / archiving)
+    public function index()
+    {
+        $suratMasuk = SuratMasuk::orderBy('created_at', 'desc')->get();
+        return view('tusekwan.surat_masuk.index', compact('suratMasuk'));
+    }
+
+    // Show detail of one surat
+    public function show($id)
+    {
+        $surat = SuratMasuk::findOrFail($id);
+        return view('tusekwan.surat_masuk.show', compact('surat'));
+    }
+
+
 
     public function screeningIndex()
     {
@@ -15,14 +31,12 @@ class TUSekwanController extends Controller
         return view('tusekwan.screening.index', compact('suratMasuk'));
     }
 
-    // Show detail of a single surat
     public function screeningShow($id)
     {
         $surat = SuratMasuk::findOrFail($id);
         return view('tusekwan.screening.show', compact('surat'));
     }
 
-    // Approve or reject surat
     public function screeningUpdate(Request $request, $id)
     {
         $request->validate([
@@ -40,8 +54,19 @@ class TUSekwanController extends Controller
             ->with('success', 'Screening updated successfully!');
     }
 
-        public function dashboard()
-    {
-        return view('tu_sekre.dashboard');
-    }
+
+   public function dashboard()
+{
+    $stats = [
+        'total' => \App\Models\SuratMasuk::count(),
+        'pending' => \App\Models\SuratMasuk::where('status_screening', 'pending')->count(),
+        'approved' => \App\Models\SuratMasuk::where('status_screening', 'approved')->count(),
+        'rejected' => \App\Models\SuratMasuk::where('status_screening', 'rejected')->count(),
+    ];
+
+    $recentSurat = \App\Models\SuratMasuk::latest()->take(5)->get();
+
+    return view('tusekwan.dashboard', compact('stats', 'recentSurat'));
+}
+
 }

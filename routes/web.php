@@ -62,8 +62,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/screening/{id}', [TUSekwanScreeningController::class, 'show'])->name('tusekwan.screening.show');
         Route::patch('/screening/{id}', [TUSekwanScreeningController::class, 'update'])->name('tusekwan.screening.update');
 
-        // Surat TU Sekwan (if used)
-        Route::resource('/surat_masuk', TUSekwanSuratController::class);
+    
+    // Surat Masuk (general list + detail)
+    Route::get('/surat_masuk', [TUSekwanController::class, 'index'])->name('tusekwan.surat_masuk.index');
+    Route::get('/surat_masuk/{id}', [TUSekwanController::class, 'show'])->name('tusekwan.surat_masuk.show');
+
+        //
     });
 
     //

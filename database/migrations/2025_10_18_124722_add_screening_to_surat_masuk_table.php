@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::table('surat_masuk', function (Blueprint $table) {
              $table->enum('status_screening', ['pending', 'approved', 'rejected'])
-              ->default('pending');
+              ->default('pending')
+              ->after('no_surat');
             
 
         $table->text('catatan_tusekwan')->nullable()->after('status_screening');
@@ -28,6 +29,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('surat_masuk', function (Blueprint $table) {
+            // drop foreign key first to avoid constraint errors, then drop columns
+            $table->dropForeign(['screened_by']);
             $table->dropColumn(['status_screening', 'catatan_tusekwan', 'screened_by']);
         });
     }

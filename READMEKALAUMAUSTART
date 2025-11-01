@@ -5,3 +5,283 @@ npm run dev (sekali ja kalau sudah selesai downlodad breeze)
 kalau sudah download breeze mdo this : 
 php artisan serve
 
+
+NOTE: CARA AKSES VIEW SEMENTARA SAMPAI ROUTING BERES: 
+(ROUTING KENA ND BANTU SOALNYA SULID)
+1. LOGIN PAKE AKUN YANG ROLE NYA BENER AKA ADMIN LoGIN Admin
+2. HABIS LOGIN GANTI URL DI BROWSER JADI : ROLE/dashboard
+    contoh : http://127.0.0.1:8000/dashboard   <<< url yang muncul habis login
+    ganti jadi : http://127.0.0.1:8000/role/dashboard note role disini adalah role akun jadi admin ya admin
+3. lihar views insyaallah bisa
+        kalau kdd user jar nya lo (ikam di db lokal kdd user ) v v v v v 
+            pakai seeder tinggal aktifkan : php artisan migrate:fresh --seed
+
+5️⃣ STATUS PROJECT (ESTIMASI)
+BagianProgressStatus
+Backend (Models, Controllers, DB)✅ 95%Selesai
+Middleware & Routing⚙️ 85%Perlu perbaikan redirect
+Views & Layout (All Roles)🧩 70%Admin OK, lainnya WIP
+Seeder & Factory✅ 100% Lengkap
+Testing / QA🧠 50% Belum dilakukan penuh
+Deployment🚧 0%Belum dimulai
+📈 Total Progress: ± 80% — fully functional, need frontend and routing polish.
+
+
+to do list gemem : 
+PEKERJAAN YANG MASIH PERLU DILAKUKAN
+🖼️ A. VIEW / FRONTEND
+
+💡 Tujuan utama: Menyelesaikan tampilan setiap role agar mengikuti desain di Figma
+🔗 Figma: Wireframe PKL
+
+🧑‍💼 1. TU Sekretariat (tusekre)
+
+Sudah ada: dashboard + basic CRUD surat masuk
+
+Belum ada / perlu dilengkapi:
+
+resources/views/tusekre/surat_masuk/index.blade.php
+
+resources/views/tusekre/surat_masuk/create.blade.php
+
+resources/views/tusekre/surat_masuk/show.blade.php
+
+resources/views/tusekre/surat_masuk/edit.blade.php
+
+Tambahkan tampilan form upload surat masuk sesuai Figma.
+
+🧾 2. TU Sekwan (tusekwan)
+
+Sudah ada: dashboard, screening logic
+
+Belum ada / perlu dicek ulang:
+
+resources/views/tusekwan/screening/index.blade.php
+
+resources/views/tusekwan/screening/show.blade.php
+
+resources/views/tusekwan/screening/form.blade.php
+
+Sesuaikan tampilan screening dengan wireframe TU Sekwan (ada list surat dan tombol approve/reject).
+
+🧠 3. Pimpinan
+
+Sudah ada: dashboard + disposisi logic
+
+Belum ada / perlu styling:
+
+resources/views/pimpinan/disposisi/index.blade.php
+
+resources/views/pimpinan/disposisi/create.blade.php
+
+resources/views/pimpinan/disposisi/show.blade.php
+
+Tambahkan kolom “catatan” dan tombol “selesai” seperti di Figma (alur disposisi surat).
+
+👷 4. Staff
+
+Sudah ada: controller, tapi view masih default Breeze.
+
+Belum ada / perlu dibuat dari nol:
+
+resources/views/staff/dashboard.blade.php
+
+resources/views/staff/disposisi/index.blade.php
+
+resources/views/staff/disposisi/show.blade.php
+
+resources/views/staff/surat/index.blade.php
+
+Tampilan staff hanya bisa melihat disposisi yang diterima dan surat yang ditugaskan.
+
+⚙️ 5. Admin
+
+Sudah lengkap dan sesuai desain.
+
+Perlu ditambahkan halaman tambahan:
+
+resources/views/admin/users/index.blade.php → untuk kelola akun
+
+resources/views/admin/settings.blade.php → pengaturan umum (opsional)
+
+
+PEKERJAAN YANG MASIH PERLU DILAKUKAN
+🖼️ A. VIEW / FRONTEND
+
+💡 Tujuan utama: Menyelesaikan tampilan setiap role agar mengikuti desain di Figma
+🔗 Figma: Wireframe PKL
+
+🧑‍💼 1. TU Sekretariat (tusekre)
+
+Sudah ada: dashboard + basic CRUD surat masuk
+
+Belum ada / perlu dilengkapi:
+
+resources/views/tusekre/surat_masuk/index.blade.php
+
+resources/views/tusekre/surat_masuk/create.blade.php
+
+resources/views/tusekre/surat_masuk/show.blade.php
+
+resources/views/tusekre/surat_masuk/edit.blade.php
+
+Tambahkan tampilan form upload surat masuk sesuai Figma.
+
+🧾 2. TU Sekwan (tusekwan)
+
+Sudah ada: dashboard, screening logic
+
+Belum ada / perlu dicek ulang:
+
+resources/views/tusekwan/screening/index.blade.php
+
+resources/views/tusekwan/screening/show.blade.php
+
+resources/views/tusekwan/screening/form.blade.php
+
+Sesuaikan tampilan screening dengan wireframe TU Sekwan (ada list surat dan tombol approve/reject).
+
+🧠 3. Pimpinan
+
+Sudah ada: dashboard + disposisi logic
+
+Belum ada / perlu styling:
+
+resources/views/pimpinan/disposisi/index.blade.php
+
+resources/views/pimpinan/disposisi/create.blade.php
+
+resources/views/pimpinan/disposisi/show.blade.php
+
+Tambahkan kolom “catatan” dan tombol “selesai” seperti di Figma (alur disposisi surat).
+
+👷 4. Staff
+
+Sudah ada: controller, tapi view masih default Breeze.
+
+Belum ada / perlu dibuat dari nol:
+
+resources/views/staff/dashboard.blade.php
+
+resources/views/staff/disposisi/index.blade.php
+
+resources/views/staff/disposisi/show.blade.php
+
+resources/views/staff/surat/index.blade.php
+
+Tampilan staff hanya bisa melihat disposisi yang diterima dan surat yang ditugaskan.
+
+⚙️ 5. Admin
+
+Sudah lengkap dan sesuai desain.
+
+Perlu ditambahkan halaman tambahan:
+
+resources/views/admin/users/index.blade.php → untuk kelola akun
+
+resources/views/admin/settings.blade.php → pengaturan umum (opsional)
+
+🛠️ B. ROUTING & LOGIN REDIRECT
+
+💡 Masalah: Saat login, user masih diarahkan ke /dashboard (default Breeze).
+💡 Solusi sementara: Cek tampilan manual via URL (/admin/dashboard, /pimpinan/dashboard, dst).
+
+📌 Tugas teman kamu:
+
+Perbaiki sistem redirect by role setelah login.
+
+Bisa menggunakan middleware RedirectByRole
+
+Atau ubah langsung di AuthenticatedSessionController (di app/Http/Controllers/Auth/)
+
+protected function authenticated(Request $request, $user)
+{
+    switch ($user->role) {
+        case 'admin':
+            return redirect()->route('admin.dashboard');
+        case 'tusekre':
+            return redirect()->route('tusekre.dashboard');
+        case 'tusekwan':
+            return redirect()->route('tusekwan.dashboard');
+        case 'pimpinan':
+            return redirect()->route('pimpinan.dashboard');
+        case 'staff':
+            return redirect()->route('staff.dashboard');
+    }
+}
+
+
+Pastikan semua route role/dashboard dapat diakses tanpa error 403.
+
+🧰 C. CONTROLLER ADJUSTMENTS
+
+Beberapa controller (khususnya TU Sekwan & Staff) masih perlu dicek ulang agar query-nya sesuai dengan role:
+
+Pastikan TU Sekwan hanya bisa melihat surat masuk dengan status approved/pending screening.
+
+Pastikan Pimpinan hanya melihat disposisi yang dikirim ke mereka.
+
+Staff hanya melihat disposisi yang diteruskan kepadanya.
+
+💾 D. DATABASE & SEEDER
+
+Jalankan ulang migration & seeder di mesin baru:
+
+php artisan migrate:fresh --seed
+
+
+Pastikan tabel users punya kolom role (bukan roles).
+
+Pastikan semua akun testing ada:
+
+admin@example.com
+ — role: admin
+
+tusekre@example.com
+ — role: tusekre
+
+tusekwan@example.com
+ — role: tusekwan
+
+pimpinan@example.com
+ — role: pimpinan
+
+staff@example.com
+ — role: staff
+
+💡 E. PENGECEKAN TAMBAHAN
+
+Cek kembali layout (layouts/base.blade.php & layouts/{role}.blade.php) agar semua @yield('sidebar') dan @yield('content') berfungsi.
+
+Tes upload surat (TU Sekre) → screening (TU Sekwan) → disposisi (Pimpinan) → view (Staff) alurnya lengkap.
+
+Tambahkan validasi pada semua form (Laravel validation).
+
+🚀 4️⃣ STEP UNTUK MENJALANKAN DI LAPTOP TEMAN
+
+Clone repo dari GitHub.
+
+Jalankan:
+
+composer install
+npm install
+npm run dev
+php artisan migrate --seed
+php artisan serve
+
+
+Login menggunakan salah satu akun seeded (admin@example.com
+ / password: password).
+
+Tes akses ke:
+
+/admin/dashboard
+/tusekre/dashboard
+/tusekwan/dashboard
+/pimpinan/dashboard
+/staff/dashboard
+
+
+Jika dashboard tampil → layout sudah terhubung dengan benar.
+
+

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('surat_masuk', function (Blueprint $table) {
              $table->enum('status_screening', ['pending', 'approved', 'rejected'])
               ->default('pending')
-              ->after('no_surat');
+              ->after('id');
             
 
         $table->text('catatan_tusekwan')->nullable()->after('status_screening');

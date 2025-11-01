@@ -8,7 +8,7 @@ class PimpinanController extends Controller
 {
         public function dashboard()
     {
-        return view('pimpinan.dashboard');
+        return view('pimpinan.dashboard')->with('layout', 'layouts.pimpinan');
     }
 
 }

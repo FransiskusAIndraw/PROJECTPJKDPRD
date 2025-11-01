@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PimpinanController;
 use App\Http\Controllers\StaffController;
@@ -21,9 +22,18 @@ use App\Http\Controllers\ArsipController;
 //
 Route::get('/', fn() => view('welcome'));
 
-Route::get('/dashboard', fn() => view('dashboard'))
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('/dashboard', function () {
+    $user = Auth::user();
+
+      return match($user->role) {
+        'admin' => redirect()->route('admin.dashboard'),
+        'tusekre' => redirect()->route('tusekre.dashboard'),
+        'tusekwan' => redirect()->route('tusekwan.dashboard'),
+        'pimpinan' => redirect()->route('pimpinan.dashboard'),
+        'staff' => redirect()->route('staff.dashboard'),
+        default => view('dashboard'),
+    };
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 //
 // ─── AUTHENTICATED USER ROUTES ─────────────────────────────────────

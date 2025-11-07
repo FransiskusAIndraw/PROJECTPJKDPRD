@@ -43,8 +43,12 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('tusekwan.dashboard');
             case 'pimpinan':
                 return redirect()->route('pimpinan.dashboard');
-            case 'staff':
-                return redirect()->route('staff.dashboard');
+            case 'kabag_persidangan':
+                return redirect()->route('kabag.persidangan.dashboard');
+            case 'kabag_keuangan':
+                return redirect()->route('kabag.keuangan.dashboard');
+            case 'kabag_umum':
+                return redirect()->route('kabag.umum.dashboard');
             default:
                 auth()->logout();
                 return redirect()->route('login')->withErrors(['email' => 'Role akun tidak dikenali.']);

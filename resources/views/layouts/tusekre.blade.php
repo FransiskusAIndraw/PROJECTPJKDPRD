@@ -70,6 +70,8 @@
     <main class="flex-1 overflow-y-auto">
         <header class="bg-white shadow p-4 flex justify-between items-center">
             <h1 class="text-lg font-semibold">TU Sekretariat | {{ Auth::user()->name }}</h1>
+
+            <x-notif-bell />
         </header>
 
         <section class="p-6">

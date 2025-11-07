@@ -52,6 +52,10 @@ class User extends Authenticatable
         return $this->roles === $role;
     }
 
+    public function notifikasi()
+    {
+        return $this->hasMany(Notifikasi::class, 'user_id');
+    }
     public function suratMasukDibuat()
 {
     return $this->hasMany(SuratMasuk::class, 'created_by');

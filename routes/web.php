@@ -31,9 +31,9 @@ Route::get('/dashboard', fn () => view('dashboard'))
 */
 Route::middleware('auth')->group(function () {
     Route::get('/notifikasi', [NotifikasiController::class,'index'])->name('notifikasi.index'); // opsional: halaman semua notifikasi
-    Route::post('/notifikasi/{id}/read', [NotifikasiController::class,'markAsRead'])->name('notifikasi.read');
-    // optional: route untuk mark all read
-    Route::post('/notifikasi/read-all', [NotifikasiController::class,'markAllRead'])->name('notifikasi.readAll');
+    // Notifikasi
+    Route::post('/notifikasi/{id}/read', [\App\Http\Controllers\NotifikasiController::class, 'read'])->name('notifikasi.read')->middleware('auth');
+    Route::post('/notifikasi/read-all', [\App\Http\Controllers\NotifikasiController::class, 'readAll'])->name('notifikasi.readAll')->middleware('auth');
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

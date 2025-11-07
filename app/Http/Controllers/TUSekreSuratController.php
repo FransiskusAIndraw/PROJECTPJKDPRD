@@ -10,6 +10,7 @@ use App\Exports\SuratMasukExport;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Arsip;
+use App\Helpers\NotifHelper;
 use Illuminate\Support\Facades\Storage;
 
 class TUSekreSuratController extends Controller
@@ -37,10 +38,20 @@ class TUSekreSuratController extends Controller
         $validated['status_screening'] = SuratMasuk::SCREENING_PENDING;
         $validated['created_by'] = auth()->id();
 
-        SuratMasuk::create($validated);
+        // Simpan surat
+        $surat = SuratMasuk::create($validated);
+
+        // ======================================
+        // KIRIM NOTIFIKASI KE TU SEKWAN
+        // ======================================
+        $tusekwan = User::where('roles', 'tusekwan')->first();
+
+        NotifHelper::send('tusekwan', 'Ada surat masuk baru yang perlu diverifikasi.', route('tusekwan.surat_masuk.index'));
+
+        
 
         return redirect()->route('tusekre.surat_masuk.index')
-            ->with('success', 'Surat berhasil diunggah ');
+            ->with('success', 'Surat berhasil diunggah.');
     }
 
     public function search(Request $request)
@@ -111,11 +122,19 @@ class TUSekreSuratController extends Controller
         // Reset status agar dikirim ulang ke TU Sekwan
         $surat->markKirimUlangSetelahRevisi(Auth::id());
 
-
+        // ======================================
+        // KIRIM NOTIFIKASI ULANG KE TU SEKWAN
+        // ======================================
+        NotifHelper::send(
+            'tusekwan',
+            'Ada surat revisi yang sudah diperbaiki dan perlu diverifikasi ulang.',
+            route('tusekwan.surat_masuk.index')
+        );
 
         return redirect()->route('tusekre.surat_perlu_revisi')
             ->with('success', 'Surat berhasil diperbaiki dan dikirim ulang ke TU Sekwan.');
     }
+
 
     public function arsipkan($id)
     {

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Helpers\NotifHelper;
 use Illuminate\Http\Request;
 use App\Models\SuratMasuk;
 use Illuminate\Support\Facades\Storage;
@@ -49,6 +49,8 @@ class TUSekwanSuratController extends Controller
             // Verifikasi ditolak -> kembali ke TU Sekre untuk revisi
             $surat->markPerluRevisi($request->catatan_tusekwan, auth()->id());
             $message = 'Surat dikembalikan ke TU Sekretariat untuk revisi.';
+            NotifHelper::send($surat->created_by, 'Surat Anda dikembalikan untuk revisi.', route('tusekre.surat_perlu_revisi'));
+
         }
         return redirect()->route('tusekwan.surat_masuk.index')->with('success', $message);
     }

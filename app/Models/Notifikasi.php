@@ -9,7 +9,7 @@ class Notifikasi extends Model
     protected $fillable = [
         'user_id',
         'pesan',
-        'status_notif', // 'belum_terbaca' / 'terbaca'
+        'status_notif', 
     ];
 
     // timestamps default created_at, updated_at

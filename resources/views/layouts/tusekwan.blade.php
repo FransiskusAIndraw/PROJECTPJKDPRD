@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TU Sekwan Dashboard</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 flex h-screen">
     <aside class="w-64 bg-purple-700 text-white flex flex-col">
@@ -47,8 +48,10 @@
     </aside>
 
     <main class="flex-1 overflow-y-auto">
-        <header class="bg-white shadow p-4 flex justify-between">
+        <header class="bg-white shadow p-4 flex justify-between items-center">
             <h1 class="text-lg font-semibold">TU Sekretaris Dewan | {{ Auth::user()->name }}</h1>
+
+            <x-notif-bell />            
         </header>
 
         <section class="p-6">

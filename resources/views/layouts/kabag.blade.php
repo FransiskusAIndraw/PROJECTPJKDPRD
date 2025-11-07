@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kabag Dashboard</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 @php
     $role = Auth::user()->roles ?? 'kabag';
@@ -55,7 +56,10 @@
             <h1 class="text-lg font-semibold">
                 Dashboard Kabag {{ $namaBidang }} | {{ Auth::user()->name }}
             </h1>
+
+            <x-notif-bell />
         </header>
+
 
         <section class="p-6">
             @yield('content')

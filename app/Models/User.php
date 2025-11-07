@@ -49,7 +49,7 @@ class User extends Authenticatable
 
      public function isRole($role)
     {
-        return $this->role === $role;
+        return $this->roles === $role;
     }
 
     public function suratMasukDibuat()

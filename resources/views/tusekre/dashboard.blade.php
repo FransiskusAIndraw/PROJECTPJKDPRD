@@ -8,9 +8,9 @@
     <div class="bg-white p-6 rounded shadow">
         <h3 class="text-lg font-semibold mb-3">Aktivitas Terbaru</h3>
         <ul class="space-y-2">
-            <li>📩 Surat Masuk baru diunggah</li>
-            <li>✅ Surat telah dikirim ke TU Sekwan</li>
-            <li>📤 Arsip surat selesai dibuat</li>
+            <li>Surat Masuk baru diunggah</li>
+            <li>Surat telah dikirim ke TU Sekwan</li>
+            <li>Arsip surat selesai dibuat</li>
         </ul>
     </div>
 </div>

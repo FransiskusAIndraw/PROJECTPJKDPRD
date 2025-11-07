@@ -1,66 +1,57 @@
 @extends('layouts.tusekwan')
 
 @section('content')
-<div class="p-6">
-    <h2 class="text-xl font-bold mb-4">Daftar Surat Masuk (Screening & Arsip)</h2>
+<div class="bg-white p-6 rounded-lg shadow">
+    <h2 class="text-xl font-semibold mb-4">Daftar Surat Masuk Menunggu Verifikasi</h2>
 
+    {{-- Flash Message --}}
     @if (session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4">
+        <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
             {{ session('success') }}
         </div>
     @endif
 
-    <table class="min-w-full bg-white border">
-        <thead>
-            <tr class="bg-gray-100 text-left">
-                <th class="px-4 py-2 border">No. Surat</th>
-                <th class="px-4 py-2 border">Perihal</th>
-                <th class="px-4 py-2 border">Asal Surat</th>
-                <th class="px-4 py-2 border">Tanggal Masuk</th>
-                <th class="px-4 py-2 border">Status</th>
-                <th class="px-4 py-2 border text-center">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($suratMasuk as $surat)
+    @if ($suratMasuk->isEmpty())
+        <p class="text-gray-600">Tidak ada surat yang menunggu verifikasi.</p>
+    @else
+        <table class="w-full border border-gray-300 rounded-lg text-sm">
+            <thead class="bg-gray-100">
                 <tr>
-                    <td class="border px-4 py-2">{{ $surat->nomor_surat }}</td>
-                    <td class="border px-4 py-2">{{ $surat->perihal }}</td>
-                    <td class="border px-4 py-2">{{ $surat->asal_surat }}</td>
-                    <td class="border px-4 py-2">{{ $surat->tanggal_masuk }}</td>
-                    <td class="border px-4 py-2">
-                        <span class="@if($surat->status == 'arsip') bg-green-100 text-green-700 
-                                     @elseif($surat->status == 'selesai') bg-blue-100 text-blue-700 
-                                     @else bg-gray-100 text-gray-700 @endif 
-                                     px-2 py-1 rounded text-sm">
-                            {{ ucfirst($surat->status) }}
-                        </span>
-                    </td>
-                    <td class="border px-4 py-2 text-center space-x-2">
-                        <a href="{{ route('tusekwan.surat_masuk.show', $surat->id) }}" 
-                           class="text-blue-600 hover:underline">Lihat</a>
-
-                        @if ($surat->status === 'selesai')
-                            <form action="{{ route('arsip.store') }}" method="POST" class="inline">
-                                @csrf
-                                <input type="hidden" name="surat_masuk_id" value="{{ $surat->id }}">
-                                <button type="submit" 
-                                        class="text-green-600 hover:underline"
-                                        onclick="return confirm('Arsipkan surat ini?')">
-                                    Arsipkan
-                                </button>
-                            </form>
-                        @endif
-                    </td>
+                    <th class="p-2 text-left border-b">No</th>
+                    <th class="p-2 text-left border-b">Nomor Surat</th>
+                    <th class="p-2 text-left border-b">Perihal</th>
+                    <th class="p-2 text-left border-b">Tanggal Surat</th>
+                    <th class="p-2 text-left border-b">Asal Surat</th>
+                    <th class="p-2 text-left border-b">Status</th>
+                    <th class="p-2 text-left border-b">Aksi</th>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="6" class="border px-4 py-2 text-center text-gray-500">
-                        Tidak ada surat masuk.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($suratMasuk as $index => $surat)
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-2 border-b">{{ $index + 1 }}</td>
+                        <td class="p-2 border-b">{{ $surat->nomor_surat }}</td>
+                        <td class="p-2 border-b">{{ Str::limit($surat->perihal, 60) }}</td>
+                        <td class="p-2 border-b">{{ $surat->tanggal_surat->format('d M Y') }}</td>
+                        <td class="p-2 border-b">{{ $surat->pengirim }}</td>
+                        <td class="p-2 border-b">
+                            <span class="px-2 py-1 text-xs rounded 
+                                @if($surat->status === 'terkirim_ke_tusekwan') bg-yellow-100 text-yellow-800
+                                @elseif($surat->status === 'menunggu_verifikasi') bg-blue-100 text-blue-800
+                                @elseif($surat->status === 'perlu_revisi') bg-red-100 text-red-800
+                                @elseif($surat->status === 'terverifikasi') bg-green-100 text-green-800
+                                @endif">
+                                {{ \App\Models\SuratMasuk::statusLabel($surat->status) }}
+                            </span>
+                        </td>
+                        <td class="p-2 border-b">
+                            <a href="{{ route('tusekwan.surat_masuk.edit', $surat->id) }}" 
+                               class="text-blue-600 hover:underline">Verifikasi</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
 </div>
 @endsection

@@ -1,61 +1,34 @@
-@extends('layouts.app')
+@extends('layouts.pimpinan')
 
 @section('content')
-<div class="container mt-4">
-    <h2 class="mb-4">📑 Daftar Disposisi</h2>
+<div class="bg-white p-6 rounded shadow">
 
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+    <h2 class="text-xl font-semibold mb-4">Surat Masuk untuk Ditinjau</h2>
 
-    <div class="mb-3 text-end">
-        <a href="{{ route('pimpinan.disposisi.create') }}" class="btn btn-primary">
-            + Buat Disposisi Baru
-        </a>
-    </div>
-
-    <table class="table table-bordered table-hover align-middle">
-        <thead class="table-light">
+    <table class="w-full border border-gray-200">
+        <thead class="bg-purple-700 text-white">
             <tr>
-                <th>#</th>
-                <th>No Surat</th>
-                <th>Perihal</th>
-                <th>Diteruskan Kepada</th>
-                <th>Status</th>
-                <th>Tanggal</th>
-                <th>Aksi</th>
+                <th class="p-2 text-left">Nomor Surat</th>
+                <th class="p-2 text-left">Perihal</th>
+                <th class="p-2 text-left">Pengirim</th>
+                <th class="p-2 text-left">Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @forelse($disposisis as $d)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $d->suratMasuk->no_surat ?? '-' }}</td>
-                    <td>{{ $d->suratMasuk->perihal ?? '-' }}</td>
-                    <td>{{ $d->diteruskanKepada->name ?? '-' }}</td>
-                    <td>
-                        <span class="badge {{ $d->status === 'selesai' ? 'bg-success' : 'bg-warning text-dark' }}">
-                            {{ ucfirst($d->status) }}
-                        </span>
-                    </td>
-                    <td>{{ $d->created_at->format('d M Y') }}</td>
-                    <td>
-                        <a href="{{ route('pimpinan.disposisi.show', $d->id) }}" class="btn btn-sm btn-info">Lihat</a>
-                        @if($d->status !== 'selesai')
-                            <form action="{{ route('pimpinan.disposisi.updateStatus', $d->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('PATCH')
-                                <button type="submit" class="btn btn-sm btn-success">Tandai Selesai</button>
-                            </form>
-                        @endif
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="7" class="text-center">Belum ada disposisi</td>
-                </tr>
-            @endforelse
+            @foreach($suratMasuk as $surat)
+            <tr class="border-b hover:bg-gray-100">
+                <td class="p-2">{{ $surat->nomor_surat }}</td>
+                <td class="p-2">{{ $surat->perihal }}</td>
+                <td class="p-2">{{ $surat->pengirim }}</td>
+                <td class="p-2">
+                    <a href="{{ route('pimpinan.disposisi.review', $surat->id) }}" class="text-blue-600 underline">
+                        Tambahkan Instruksi
+                    </a>
+                </td>
+            </tr>
+            @endforeach
         </tbody>
     </table>
+
 </div>
 @endsection

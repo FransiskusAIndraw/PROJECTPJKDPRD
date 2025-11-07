@@ -1,44 +1,31 @@
-@extends('layouts.app')
+@extends('layouts.pimpinan')
 
 @section('content')
-<div class="container mt-4">
-    <h2 class="mb-4">📄 Detail Disposisi</h2>
+<div class="bg-white p-6 rounded shadow">
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <h5 class="card-title">{{ $disposisi->suratMasuk->perihal ?? 'Tidak ada perihal' }}</h5>
-            <p class="text-muted mb-2">
-                <strong>No. Surat:</strong> {{ $disposisi->suratMasuk->no_surat ?? '-' }} <br>
-                <strong>Tanggal:</strong> {{ $disposisi->suratMasuk->tanggal ?? '-' }}
-            </p>
+    <h2 class="text-xl font-semibold mb-4">Detail Disposisi Surat</h2>
 
-            <hr>
+    <p><strong>Nomor Surat:</strong> {{ $disposisi->surat->nomor_surat }}</p>
+    <p><strong>Perihal:</strong> {{ $disposisi->surat->perihal }}</p>
+    <p><strong>Asal Surat:</strong> {{ $disposisi->surat->pengirim }}</p>
+    <p><strong>Diteruskan Kepada:</strong> {{ $disposisi->kepada->name }}</p>
+    <p><strong>Instruksi:</strong> {{ $disposisi->instruksi }}</p>
+    <p><strong>Status:</strong> <span class="capitalize">{{ $disposisi->status_dispo }}</span></p>
 
-            <p><strong>Diteruskan Kepada:</strong> {{ $disposisi->diteruskanKepada->name ?? '-' }}</p>
-            <p><strong>Catatan / Instruksi:</strong></p>
-            <div class="border rounded p-3 bg-light mb-3">
-                {{ $disposisi->catatan }}
-            </div>
+    <div class="mt-4 flex gap-2">
+        @if($disposisi->status_dispo !== 'selesai')
+        <form action="{{ route('pimpinan.disposisi.update', $disposisi->id) }}" method="POST">
+            @csrf @method('PUT')
+            <button class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">
+                Tandai Selesai
+            </button>
+        </form>
+        @endif
 
-            <p>
-                <strong>Status:</strong>
-                <span class="badge {{ $disposisi->status === 'selesai' ? 'bg-success' : 'bg-warning text-dark' }}">
-                    {{ ucfirst($disposisi->status) }}
-                </span>
-            </p>
-
-            @if($disposisi->status !== 'selesai')
-                <form action="{{ route('pimpinan.disposisi.updateStatus', $disposisi->id) }}" method="POST">
-                    @csrf
-                    @method('PATCH')
-                    <button type="submit" class="btn btn-success mt-2">Tandai Selesai</button>
-                </form>
-            @endif
-        </div>
+        <a href="{{ route('pimpinan.disposisi.index') }}" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+            Kembali
+        </a>
     </div>
 
-    <div class="mt-3">
-        <a href="{{ route('pimpinan.disposisi.index') }}" class="btn btn-secondary">⬅ Kembali</a>
-    </div>
 </div>
 @endsection

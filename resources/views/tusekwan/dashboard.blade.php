@@ -8,7 +8,6 @@
     <div class="bg-white p-6 rounded shadow">
         <h3 class="text-lg font-semibold mb-3">Surat untuk Discreening</h3>
         <p>Anda memiliki <span class="text-blue-600 font-bold">5</span> surat yang menunggu proses screening.</p>
-        <a href="{{ route('tusekwan.screening.index') }}" class="inline-block mt-3 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">Lihat Screening</a>
     </div>
 </div>
 @endsection

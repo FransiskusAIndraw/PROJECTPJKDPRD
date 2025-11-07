@@ -11,7 +11,7 @@ NOTE: CARA AKSES VIEW SEMENTARA SAMPAI ROUTING BERES:
 1. LOGIN PAKE AKUN YANG ROLE NYA BENER AKA ADMIN LoGIN Admin
 2. HABIS LOGIN GANTI URL DI BROWSER JADI : ROLE/dashboard
     contoh : http://127.0.0.1:8000/dashboard   <<< url yang muncul habis login
-    ganti jadi : http://127.0.0.1:8000/role/dashboard note role disini adalah role akun jadi admin ya admin
+    ganti jadi : http://127.0.0.1:8000/role/dashboard note role disini adalah role akun jadi admin ya admin jadinya "http://127.0.0.1:8000/admin/dashboard"
 3. lihar views insyaallah bisa
         kalau kdd user jar nya lo (ikam di db lokal kdd user ) v v v v v 
             pakai seeder tinggal aktifkan : php artisan migrate:fresh --seed
@@ -28,83 +28,6 @@ Deployment🚧 0%Belum dimulai
 
 
 to do list gemem : 
-PEKERJAAN YANG MASIH PERLU DILAKUKAN
-🖼️ A. VIEW / FRONTEND
-
-💡 Tujuan utama: Menyelesaikan tampilan setiap role agar mengikuti desain di Figma
-🔗 Figma: Wireframe PKL
-
-🧑‍💼 1. TU Sekretariat (tusekre)
-
-Sudah ada: dashboard + basic CRUD surat masuk
-
-Belum ada / perlu dilengkapi:
-
-resources/views/tusekre/surat_masuk/index.blade.php
-
-resources/views/tusekre/surat_masuk/create.blade.php
-
-resources/views/tusekre/surat_masuk/show.blade.php
-
-resources/views/tusekre/surat_masuk/edit.blade.php
-
-Tambahkan tampilan form upload surat masuk sesuai Figma.
-
-🧾 2. TU Sekwan (tusekwan)
-
-Sudah ada: dashboard, screening logic
-
-Belum ada / perlu dicek ulang:
-
-resources/views/tusekwan/screening/index.blade.php
-
-resources/views/tusekwan/screening/show.blade.php
-
-resources/views/tusekwan/screening/form.blade.php
-
-Sesuaikan tampilan screening dengan wireframe TU Sekwan (ada list surat dan tombol approve/reject).
-
-🧠 3. Pimpinan
-
-Sudah ada: dashboard + disposisi logic
-
-Belum ada / perlu styling:
-
-resources/views/pimpinan/disposisi/index.blade.php
-
-resources/views/pimpinan/disposisi/create.blade.php
-
-resources/views/pimpinan/disposisi/show.blade.php
-
-Tambahkan kolom “catatan” dan tombol “selesai” seperti di Figma (alur disposisi surat).
-
-👷 4. Staff
-
-Sudah ada: controller, tapi view masih default Breeze.
-
-Belum ada / perlu dibuat dari nol:
-
-resources/views/staff/dashboard.blade.php
-
-resources/views/staff/disposisi/index.blade.php
-
-resources/views/staff/disposisi/show.blade.php
-
-resources/views/staff/surat/index.blade.php
-
-Tampilan staff hanya bisa melihat disposisi yang diterima dan surat yang ditugaskan.
-
-⚙️ 5. Admin
-
-Sudah lengkap dan sesuai desain.
-
-Perlu ditambahkan halaman tambahan:
-
-resources/views/admin/users/index.blade.php → untuk kelola akun
-
-resources/views/admin/settings.blade.php → pengaturan umum (opsional)
-
-
 PEKERJAAN YANG MASIH PERLU DILAKUKAN
 🖼️ A. VIEW / FRONTEND
 
@@ -284,4 +207,10 @@ Tes akses ke:
 
 Jika dashboard tampil → layout sudah terhubung dengan benar.
 
+
+LANJUTAN GEMEM:
+1. jalani di terminal ("composer require maatwebsite/excel") - supaya bisa export excel di tabel surat masuk dan disposisi
+2. ubah tabel surat_masuk dan disposisi di database 
+"ALTER TABLE disposisi ADD COLUMN posisi_terakhir ENUM('sekwan','pimpinan','kabag','selesai') DEFAULT 'sekwan';" - Buat ubah kolom posisi_terakhir di tabel disposisi
+3. Kabag/staff masih kosong viewnya belum dibuat
 

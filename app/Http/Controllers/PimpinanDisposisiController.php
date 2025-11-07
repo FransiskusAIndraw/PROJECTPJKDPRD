@@ -2,84 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Disposisi;
 use App\Models\SuratMasuk;
+use App\Models\Disposisi;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class PimpinanDisposisiController extends Controller
 {
-    /**
-     * Display a listing of disposisi made or received by pimpinan.
-     */
     public function index()
     {
-        $user = Auth::user();
+        // Ambil surat yang sudah dikirim TU Sekwan ke Pimpinan
+        $suratMasuk = SuratMasuk::where('status', SuratMasuk::STATUS_DIDISPOSISIKAN_KE_PIMPINAN)->get();
 
-        $disposisis = Disposisi::with(['suratMasuk', 'diteruskanKepada'])
-            ->where('user_id', $user->id)
-            ->orWhere('diteruskan_kepada', $user->id)
-            ->latest()
-            ->get();
-
-        return view('pimpinan.disposisi.index', compact('disposisis'));
+        return view('pimpinan.disposisi.index', compact('suratMasuk'));
     }
 
-    /**
-     * Show form to create a new disposisi (forward surat to staff/pimpinan).
-     */
-    public function create()
+    public function review($id)
     {
-        $suratMasuks = SuratMasuk::whereDoesntHave('disposisis', function ($q) {
-            $q->where('status', '!=', 'selesai');
-        })->get();
+        $surat = SuratMasuk::findOrFail($id);
+        $disposisi = $surat->disposisis()->latest()->first(); 
 
-        $staffs = User::whereIn('roles', ['staff', 'pimpinan'])->get();
-
-        return view('pimpinan.disposisi.create', compact('suratMasuks', 'staffs'));
+        return view('pimpinan.disposisi.edit', compact('surat', 'disposisi'));
     }
 
-    /**
-     * Store a new disposisi (forward surat with notes).
-     */
-    public function store(Request $request)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'surat_masuk_id' => 'required|exists:surat_masuk,id',
-            'diteruskan_kepada' => 'required|exists:users,id',
-            'catatan' => 'required|string|max:1000',
+        $request->validate([
+            'instruksi_tambahan' => 'required|string|max:1000',
         ]);
 
-        Disposisi::create([
-            'surat_masuk_id' => $validated['surat_masuk_id'],
-            'user_id' => Auth::id(),
-            'diteruskan_kepada' => $validated['diteruskan_kepada'],
-            'catatan' => $validated['catatan'],
-            'status' => 'proses',
+        $surat = SuratMasuk::findOrFail($id);
+        $disposisi = $surat->disposisis()->latest()->first();
+
+        // Update instruksi final
+        $disposisi->update([
+            'instruksi' => $disposisi->instruksi . "\n\nOleh PIMPINAN:\n" . $request->instruksi_tambahan,
         ]);
 
-        return redirect()->route('pimpinan.disposisi.index')
-            ->with('success', 'Surat berhasil didisposisikan.');
-    }
+        // Ubah status ke sekwan
+        $surat->update([
+            'status' => SuratMasuk::STATUS_DITERIMA_SEKWAN
+        ]);
 
-    /**
-     * Show detail of a disposisi (surat, notes, status, recipient).
-     */
-    public function show(string $id)
-    {
-        $disposisi = Disposisi::with(['suratMasuk', 'diteruskanKepada'])->findOrFail($id);
-        return view('pimpinan.disposisi.show', compact('disposisi'));
-    }
-
-    /**
-     * Mark disposisi as selesai.
-     */
-    public function update(Request $request, string $id)
-    {
-        $disposisi = Disposisi::findOrFail($id);
-        $disposisi->update(['status' => 'selesai']);
-
-        return redirect()->back()->with('success', 'Disposisi telah diselesaikan.');
+        return redirect()->route('pimpinan.disposisi.index')->with('success', 'Disposisi berhasil dikembalikan ke TU Sekwan.');
     }
 }

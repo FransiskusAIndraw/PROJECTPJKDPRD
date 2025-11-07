@@ -59,9 +59,9 @@ class TUSekwanController extends Controller
 {
     $stats = [
         'total' => \App\Models\SuratMasuk::count(),
-        'pending' => \App\Models\SuratMasuk::where('status_screening', 'pending')->count(),
-        'approved' => \App\Models\SuratMasuk::where('status_screening', 'approved')->count(),
-        'rejected' => \App\Models\SuratMasuk::where('status_screening', 'rejected')->count(),
+        // 'pending' => \App\Models\SuratMasuk::where('status_screening', 'pending')->count(),
+        // 'approved' => \App\Models\SuratMasuk::where('status_screening', 'approved')->count(),
+        // 'rejected' => \App\Models\SuratMasuk::where('status_screening', 'rejected')->count(),
     ];
 
     $recentSurat = \App\Models\SuratMasuk::latest()->take(5)->get();

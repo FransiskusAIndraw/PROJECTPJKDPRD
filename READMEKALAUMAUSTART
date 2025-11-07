@@ -212,5 +212,5 @@ LANJUTAN GEMEM:
 1. jalani di terminal ("composer require maatwebsite/excel") - supaya bisa export excel di tabel surat masuk dan disposisi
 2. ubah tabel surat_masuk dan disposisi di database 
 "ALTER TABLE disposisi ADD COLUMN posisi_terakhir ENUM('sekwan','pimpinan','kabag','selesai') DEFAULT 'sekwan';" - Buat ubah kolom posisi_terakhir di tabel disposisi
-3. Kabag/staff masih kosong viewnya belum dibuat
+3. Kabag/staff masih kosong
 

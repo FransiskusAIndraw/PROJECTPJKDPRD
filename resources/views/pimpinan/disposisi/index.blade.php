@@ -6,7 +6,7 @@
     <h2 class="text-xl font-semibold mb-4">Surat Masuk untuk Ditinjau</h2>
 
     <table class="w-full border border-gray-200">
-        <thead class="bg-purple-700 text-white">
+        <thead class="bg-green-700 text-white">
             <tr>
                 <th class="p-2 text-left">Nomor Surat</th>
                 <th class="p-2 text-left">Perihal</th>

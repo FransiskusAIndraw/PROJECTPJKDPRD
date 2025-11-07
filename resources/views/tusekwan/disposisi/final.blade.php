@@ -68,7 +68,7 @@
                     <option value="kabag_persidangan">Kabag Persidangan dan Perundang-undangan</option>
                     <option value="kabag_keuangan">Kabag Administrasi Keuangan</option>
                     <option value="kabag_umum">Kabag Administrasi Umum dan Humas</option>
-                    <option value="tusekre">TU Sekretariat (langsung arsip)</option>
+                    <option value="tusekre">TU Sekretariat</option>
                 </select>
             </div>
 

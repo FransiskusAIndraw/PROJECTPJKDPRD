@@ -20,7 +20,11 @@ class PimpinanDisposisiController extends Controller
     public function review($id)
     {
         $surat = SuratMasuk::findOrFail($id);
-        $disposisi = $surat->disposisis()->latest()->first(); 
+        $disposisi = $surat->disposisis()->latest()->first();
+
+        if ($disposisi && $disposisi->status_dispo === 'dibaca') {
+            $disposisi->update(['status_dispo' => 'dibaca']);
+        }
 
         return view('pimpinan.disposisi.edit', compact('surat', 'disposisi'));
     }
@@ -29,21 +33,25 @@ class PimpinanDisposisiController extends Controller
     {
         $request->validate([
             'instruksi_tambahan' => 'required|string|max:1000',
+            
         ]);
 
         $surat = SuratMasuk::findOrFail($id);
         $disposisi = $surat->disposisis()->latest()->first();
 
-        // Update instruksi final
+        // Tambahkan instruksi pimpinan
         $disposisi->update([
             'instruksi' => $disposisi->instruksi . "\n\nOleh PIMPINAN:\n" . $request->instruksi_tambahan,
+            'status_dispo' => 'selesai',          // ✅ ubah status disposisi
+            'posisi_terakhir' => 'pimpinan',      // ✅ tandai posisi terakhir
         ]);
 
-        // Ubah status ke sekwan
+        // Update status surat
         $surat->update([
             'status' => SuratMasuk::STATUS_DITERIMA_SEKWAN
         ]);
 
-        return redirect()->route('pimpinan.disposisi.index')->with('success', 'Disposisi berhasil dikembalikan ke TU Sekwan.');
+        return redirect()->route('pimpinan.disposisi.index')
+            ->with('success', 'Disposisi berhasil dikembalikan ke TU Sekwan.');
     }
 }

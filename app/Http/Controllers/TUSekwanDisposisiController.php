@@ -54,6 +54,7 @@ class TUSekwanDisposisiController extends Controller
             'instruksi' => "Oleh SEKWAN:\n" . $validated['instruksi'], 
             'status_dispo' => 'pending',
             'tgl_disposisi' => now(),
+            'posisi_terakhir' => 'pimpinan',
         ]);
 
         // Update status surat menjadi 'didisposisikan ke pimpinan'
@@ -94,19 +95,20 @@ class TUSekwanDisposisiController extends Controller
         // Jika diteruskan ke Kabag tertentu
         if (in_array($request->tujuan, ['kabag_persidangan', 'kabag_keuangan', 'kabag_umum'])) {
 
-            // Update status surat → masuk dashboard kabag
             $surat->update([
                 'status' => SuratMasuk::STATUS_DITERUSKAN_KE_KABAG,
-                'diteruskan_ke_role' => $request->tujuan // tambahkan kolom ini di tabel surat_masuks
+                'diteruskan_ke_role' => $request->tujuan,
             ]);
+
+            $disposisi->update(['posisi_terakhir' => 'kabag', 'status_dispo' => 'pending']);
         }
-
         // Jika langsung ke TU Sekre
-        elseif ($request->tujuan === 'tusekre') {
-
+        else {  // <-- error ini muncul kalau sebelumnya ada tanda } atau ; yang hilang
             $surat->update([
-                'status' => SuratMasuk::STATUS_DITERUSKAN_KE_TUSEKRE
+                'status' => SuratMasuk::STATUS_DITERUSKAN_KE_TUSEKRE,
+                'diteruskan_ke_role' => 'tusekre',
             ]);
+            $disposisi->update(['posisi_terakhir' => 'tusekre', 'status_dispo' => 'pending']);
         }
 
         return redirect()->route('tusekwan.disposisi.index')

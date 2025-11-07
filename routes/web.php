@@ -30,7 +30,10 @@ Route::get('/dashboard', fn () => view('dashboard'))
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
-
+    Route::get('/notifikasi', [NotifikasiController::class,'index'])->name('notifikasi.index'); // opsional: halaman semua notifikasi
+    Route::post('/notifikasi/{id}/read', [NotifikasiController::class,'markAsRead'])->name('notifikasi.read');
+    // optional: route untuk mark all read
+    Route::post('/notifikasi/read-all', [NotifikasiController::class,'markAllRead'])->name('notifikasi.readAll');
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -131,20 +134,23 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('kabag/persidangan')->middleware('role:kabag_persidangan')->name('kabag.persidangan.')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\KabagPersidanganController::class, 'dashboard'])->name('dashboard');
-        Route::get('/disposisi', [\App\Http\Controllers\KabagDisposisiController::class, 'index'])->name('disposisi.index');
-        Route::patch('/disposisi/{id}/selesai', [\App\Http\Controllers\KabagDisposisiController::class, 'selesai'])->name('disposisi.selesai');
+        Route::get('/disposisi', [KabagDisposisiController::class, 'index'])->name('disposisi.index');
+        Route::get('/disposisi/{id}', [KabagDisposisiController::class, 'show'])->name('disposisi.show');
+        Route::patch('/disposisi/{id}/selesai', [KabagDisposisiController::class, 'selesai'])->name('disposisi.selesai');
     });
 
     Route::prefix('kabag/keuangan')->middleware('role:kabag_keuangan')->name('kabag.keuangan.')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\KabagKeuanganController::class, 'dashboard'])->name('dashboard');
-        Route::get('/disposisi', [\App\Http\Controllers\KabagDisposisiController::class, 'index'])->name('disposisi.index');
-        Route::patch('/disposisi/{id}/selesai', [\App\Http\Controllers\KabagDisposisiController::class, 'selesai'])->name('disposisi.selesai');
+        Route::get('/disposisi', [KabagDisposisiController::class, 'index'])->name('disposisi.index');
+        Route::get('/disposisi/{id}', [KabagDisposisiController::class, 'show'])->name('disposisi.show');
+        Route::patch('/disposisi/{id}/selesai', [KabagDisposisiController::class, 'selesai'])->name('disposisi.selesai');
     });
 
     Route::prefix('kabag/umum')->middleware('role:kabag_umum')->name('kabag.umum.')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\KabagUmumController::class, 'dashboard'])->name('dashboard');
-        Route::get('/disposisi', [\App\Http\Controllers\KabagDisposisiController::class, 'index'])->name('disposisi.index');
-        Route::patch('/disposisi/{id}/selesai', [\App\Http\Controllers\KabagDisposisiController::class, 'selesai'])->name('disposisi.selesai');
+        Route::get('/disposisi', [KabagDisposisiController::class, 'index'])->name('disposisi.index');
+        Route::get('/disposisi/{id}', [KabagDisposisiController::class, 'show'])->name('disposisi.show');
+        Route::patch('/disposisi/{id}/selesai', [KabagDisposisiController::class, 'selesai'])->name('disposisi.selesai');
     });
     /*
     |--------------------------------------------------------------------------

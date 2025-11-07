@@ -11,18 +11,12 @@ class Arsip extends Model
     protected $table = 'arsip';
 
     protected $fillable = [
-        'surat_id',
-        'disposisi_id',
-        'arsipkan_oleh',
-        'arsipkan_oleh_role',
-        'nomor_surat',
-        'tanggal_surat',
-        'pengirim',
-        'perihal',
-        'file_surat',
-        'instruksi',
-        'lokasi_file',
+        'surat_id','disposisi_id','arsipkan_oleh','arsipkan_oleh_role',
+        'lokasi_file','nomor_surat','tanggal_surat','pengirim','perihal',
+        'instruksi','file_surat','created_at','updated_at'
     ];
+    public $timestamps = true;
+
 
     public function surat()
     {

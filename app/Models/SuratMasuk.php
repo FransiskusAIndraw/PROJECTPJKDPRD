@@ -44,6 +44,7 @@ class SuratMasuk extends Model
     public const STATUS_DIDISPOSISIKAN_OLEH_PIMPINAN = 'didisposisikan_oleh_pimpinan';
     public const STATUS_DITERIMA_SEKWAN = 'diterima_sekwan';
     public const STATUS_DITERUSKAN_KE_KABAG = 'diteruskan_ke_kabag';
+    public const STATUS_DITERUSKAN_KE_TUSEKRE = 'diteruskan_ke_tusekre';
     public const STATUS_DITERIMA_KABAG = 'diterima_kabag';
     public const STATUS_SELESAI_DIPROSES = 'selesai_diproses';
     public const STATUS_DIARSIPKAN = 'diarsipkan';
@@ -138,6 +139,9 @@ class SuratMasuk extends Model
             self::STATUS_PERLU_REVISI => 'Perlu Revisi',
             self::STATUS_TERVERIFIKASI => 'Terverifikasi',
             self::STATUS_DIDISPOSISIKAN_KE_PIMPINAN => 'Didisposisikan ke Pimpinan',
+            self::STATUS_DITERIMA_SEKWAN => 'Diterima Sekwan',
+            self::STATUS_DITERUSKAN_KE_KABAG => 'Diteruskan ke Kabag',
+            self::STATUS_DITERUSKAN_KE_TUSEKRE => 'Diteruskan ke TU Sekre',
             self::STATUS_DIARSIPKAN => 'Diarsipkan',
         ][$status] ?? ucfirst($status);
     }

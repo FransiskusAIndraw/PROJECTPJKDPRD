@@ -65,8 +65,10 @@
                 <label class="font-semibold block mb-2">Diteruskan Kepada</label>
                 <select name="tujuan" class="border rounded-lg p-2 w-full" required>
                     <option value="">-- Pilih Tujuan --</option>
-                    <option value="kabag">Kabag</option>
-                    <option value="arsip">Arsip</option>
+                    <option value="kabag_persidangan">Kabag Persidangan dan Perundang-undangan</option>
+                    <option value="kabag_keuangan">Kabag Administrasi Keuangan</option>
+                    <option value="kabag_umum">Kabag Administrasi Umum dan Humas</option>
+                    <option value="tusekre">TU Sekretariat (langsung arsip)</option>
                 </select>
             </div>
 

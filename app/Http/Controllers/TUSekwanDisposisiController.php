@@ -80,7 +80,7 @@ class TUSekwanDisposisiController extends Controller
     {
         $request->validate([
             'instruksi_final' => 'required|string|max:1000',
-            'tujuan' => 'required|in:kabag,arsip',
+            'tujuan' => 'required|in:kabag_persidangan,kabag_keuangan,kabag_umum,tusekre',
         ]);
 
         $surat = SuratMasuk::findOrFail($id);
@@ -91,11 +91,22 @@ class TUSekwanDisposisiController extends Controller
             'instruksi' => $disposisi->instruksi . "\n\nOleh SEKWAN (Final):\n" . $request->instruksi_final,
         ]);
 
-        // Update status sesuai pilihan tujuan
-        if ($request->tujuan === 'kabag') {
-            $surat->update(['status' => SuratMasuk::STATUS_DITERUSKAN_KE_KABAG]);
-        } else {
-            $surat->update(['status' => SuratMasuk::STATUS_DIARSIPKAN]);
+        // Jika diteruskan ke Kabag tertentu
+        if (in_array($request->tujuan, ['kabag_persidangan', 'kabag_keuangan', 'kabag_umum'])) {
+
+            // Update status surat → masuk dashboard kabag
+            $surat->update([
+                'status' => SuratMasuk::STATUS_DITERUSKAN_KE_KABAG,
+                'diteruskan_ke_role' => $request->tujuan // tambahkan kolom ini di tabel surat_masuks
+            ]);
+        }
+
+        // Jika langsung ke TU Sekre
+        elseif ($request->tujuan === 'tusekre') {
+
+            $surat->update([
+                'status' => SuratMasuk::STATUS_DITERUSKAN_KE_TUSEKRE
+            ]);
         }
 
         return redirect()->route('tusekwan.disposisi.index')

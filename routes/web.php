@@ -3,18 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PimpinanController;
-use App\Http\Controllers\StaffController;
+use App\Http\Controllers\KabagDisposisiController;
 use App\Http\Controllers\TUSekreController;
 use App\Http\Controllers\TUSekwanController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\DisposisiController;
 use App\Http\Controllers\PimpinanDisposisiController;
 use App\Http\Controllers\TUSekreSuratController;
 use App\Http\Controllers\TUSekwanSuratController;
 use App\Http\Controllers\TUSekwanDisposisiController;
-use App\Http\Controllers\StaffSuratController;
-use App\Http\Controllers\TUSekwanScreeningController;
 use App\Http\Controllers\ArsipController;
 
 /*
@@ -127,18 +124,28 @@ Route::middleware('auth')->group(function () {
     });
 
     /*
-    |--------------------------------------------------------------------------
-    | STAFF (role: staff)
-    |--------------------------------------------------------------------------
-    */
-    Route::prefix('staff')->middleware('role:staff')->name('staff.')->group(function () {
-        Route::get('/dashboard', [StaffController::class, 'dashboard'])->name('dashboard');
-        Route::resource('surat', StaffSuratController::class);
-        Route::get('/disposisi', [\App\Http\Controllers\StaffDisposisiController::class, 'index'])->name('disposisi.index');
-        Route::get('/disposisi/{id}', [\App\Http\Controllers\StaffDisposisiController::class, 'show'])->name('disposisi.show');
-        Route::patch('/disposisi/{id}/status', [\App\Http\Controllers\StaffDisposisiController::class, 'updateStatus'])->name('disposisi.updateStatus');
+|--------------------------------------------------------------------------
+| KABAG (3 bidang)
+|--------------------------------------------------------------------------
+*/
+
+    Route::prefix('kabag/persidangan')->middleware('role:kabag_persidangan')->name('kabag.persidangan.')->group(function () {
+        Route::get('/dashboard', [\App\Http\Controllers\KabagPersidanganController::class, 'dashboard'])->name('dashboard');
+        Route::get('/disposisi', [\App\Http\Controllers\KabagDisposisiController::class, 'index'])->name('disposisi.index');
+        Route::patch('/disposisi/{id}/selesai', [\App\Http\Controllers\KabagDisposisiController::class, 'selesai'])->name('disposisi.selesai');
     });
 
+    Route::prefix('kabag/keuangan')->middleware('role:kabag_keuangan')->name('kabag.keuangan.')->group(function () {
+        Route::get('/dashboard', [\App\Http\Controllers\KabagKeuanganController::class, 'dashboard'])->name('dashboard');
+        Route::get('/disposisi', [\App\Http\Controllers\KabagDisposisiController::class, 'index'])->name('disposisi.index');
+        Route::patch('/disposisi/{id}/selesai', [\App\Http\Controllers\KabagDisposisiController::class, 'selesai'])->name('disposisi.selesai');
+    });
+
+    Route::prefix('kabag/umum')->middleware('role:kabag_umum')->name('kabag.umum.')->group(function () {
+        Route::get('/dashboard', [\App\Http\Controllers\KabagUmumController::class, 'dashboard'])->name('dashboard');
+        Route::get('/disposisi', [\App\Http\Controllers\KabagDisposisiController::class, 'index'])->name('disposisi.index');
+        Route::patch('/disposisi/{id}/selesai', [\App\Http\Controllers\KabagDisposisiController::class, 'selesai'])->name('disposisi.selesai');
+    });
     /*
     |--------------------------------------------------------------------------
     | DISPOSISI SHARED (tusekwan & pimpinan)

@@ -25,6 +25,12 @@ class Disposisi extends Model
         return $this->belongsTo(SuratMasuk::class, 'surat_id');
     }
 
+    public function arsip()
+    {
+        return $this->hasOne(Arsip::class, 'disposisi_id');
+    }
+
+
     // Pengirim disposisi
     public function pengirim()
     {

@@ -156,4 +156,9 @@ class SuratMasuk extends Model
     {
         return $this->hasMany(Disposisi::class, 'surat_id');
     }
+
+    public function arsips()
+    {
+        return $this->hasMany(Arsip::class, 'surat_id');
+    }
 }

@@ -17,5 +17,12 @@ export default {
         },
     },
 
+    safelist: [
+    'bg-red-800','bg-red-900','hover:bg-red-700','border-red-700',
+    'bg-blue-800','bg-blue-900','hover:bg-blue-700','border-blue-700',
+    'bg-green-800','bg-green-900','hover:bg-green-700','border-green-700',
+    'bg-gray-800','bg-gray-900','hover:bg-gray-700','border-gray-700',
+  ],
+
     plugins: [forms],
 };

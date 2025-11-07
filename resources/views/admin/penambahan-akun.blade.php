@@ -65,7 +65,9 @@
                 <option value="tusekre">TU Sekretariat</option>
                 <option value="tusekwan">TU Sekwan</option>
                 <option value="pimpinan">Pimpinan</option>
-                <option value="staff">Staff</option>
+                <option value="kabag_persidangan">Kabag Persidangan & Perundang-Undangan</option>
+                <option value="kabag_keuangan">Kabag Administrasi Keuangan</option>
+                <option value="kabag_umum">Kabag Administrasi Umum & Humas</option>
             </select>
         </div>
 

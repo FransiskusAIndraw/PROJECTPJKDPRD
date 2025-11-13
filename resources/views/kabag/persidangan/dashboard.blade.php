@@ -1,12 +1,14 @@
 @extends('layouts.kabag')
 
 @section('content')
-<div class="bg-white p-6 rounded-lg shadow">
-    <h2 class="text-2xl font-semibold text-indigo-700 mb-4">Dashboard Kabag Persidangan</h2>
-    <p class="text-gray-700">
-        Selamat datang, {{ Auth::user()->name }}!  
-        Ini adalah halaman utama untuk <strong>Kabag Persidangan</strong>.  
-        Gunakan menu di sidebar untuk melihat dan memproses disposisi surat.
-    </p>
+<div class="p-6">
+    <h2 class="text-2xl font-bold mb-2">Selamat Datang, {{ Auth::user()->name }}</h2>
+    <p class="text-gray-600 mb-8">Anda login sebagai <strong>Kabag Persidangan</strong>.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <x-dashboard-card title="Surat Sudah Diarsip" color="text-blue-600" :count="$suratArsip" />
+        <x-dashboard-card title="Disposisi Aktif" color="text-green-600" :count="$disposisiAktif" />
+        <x-dashboard-card title="Disposisi Selesai" color="text-red-600" :count="$disposisiSelesai" />
+    </div>
 </div>
 @endsection

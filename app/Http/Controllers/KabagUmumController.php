@@ -8,7 +8,10 @@ class KabagUmumController extends Controller
 {
     public function dashboard()
     {
-        // view yang sudah kamu buat: resources/views/kabag/umum/dashboard.blade.php
-        return view('kabag.umum.dashboard');
+        return view('kabag.umum.dashboard', [
+            'suratArsip'       => \App\Models\Arsip::count(),
+            'disposisiAktif'   => \App\Models\Disposisi::where('status_dispo', 'pending')->count(),
+            'disposisiSelesai' => \App\Models\Disposisi::where('status_dispo', 'selesai')->count(),
+        ]);
     }
 }

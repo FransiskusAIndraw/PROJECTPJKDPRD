@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 
 class PimpinanController extends Controller
 {
-        public function dashboard()
+    public function dashboard()
     {
-        return view('pimpinan.dashboard')->with('layout', 'layouts.pimpinan');
+        return view('pimpinan.dashboard', [
+            'disposisiAktif'   => \App\Models\Disposisi::where('status_dispo', 'pending')->count(),
+            'disposisiSelesai' => \App\Models\Disposisi::where('status_dispo', 'selesai')->count(),
+        ]);
     }
-
 }

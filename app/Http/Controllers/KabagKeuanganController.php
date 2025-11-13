@@ -8,7 +8,10 @@ class KabagKeuanganController extends Controller
 {
     public function dashboard()
     {
-        // view yang sudah kamu buat: resources/views/kabag/keuangan/dashboard.blade.php
-        return view('kabag.keuangan.dashboard');
+        return view('kabag.keuangan.dashboard', [
+            'suratArsip'       => \App\Models\Arsip::count(),
+            'disposisiAktif'   => \App\Models\Disposisi::where('status_dispo', 'pending')->count(),
+            'disposisiSelesai' => \App\Models\Disposisi::where('status_dispo', 'selesai')->count(),
+        ]);
     }
 }

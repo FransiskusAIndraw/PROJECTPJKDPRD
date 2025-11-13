@@ -55,18 +55,13 @@ class TUSekwanController extends Controller
     }
 
 
-   public function dashboard()
-{
-    $stats = [
-        'total' => \App\Models\SuratMasuk::count(),
-        // 'pending' => \App\Models\SuratMasuk::where('status_screening', 'pending')->count(),
-        // 'approved' => \App\Models\SuratMasuk::where('status_screening', 'approved')->count(),
-        // 'rejected' => \App\Models\SuratMasuk::where('status_screening', 'rejected')->count(),
-    ];
-
-    $recentSurat = \App\Models\SuratMasuk::latest()->take(5)->get();
-
-    return view('tusekwan.dashboard', compact('stats', 'recentSurat'));
-}
+    public function dashboard()
+    {
+        return view('tusekwan.dashboard', [
+            'suratValidasi'    => \App\Models\SuratMasuk::where('status_screening', 'pending')->count(),
+            'disposisiAktif'   => \App\Models\Disposisi::where('status_dispo', 'pending')->count(),
+            'disposisiSelesai' => \App\Models\Disposisi::where('status_dispo', 'selesai')->count(),
+        ]);
+    }
 
 }

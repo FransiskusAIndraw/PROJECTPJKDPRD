@@ -8,7 +8,11 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard')->with('layout', 'layouts.admin');
+        return view('admin.dashboard', [
+            'totalUsers' => \App\Models\User::count(),
+            'disposisiAktif'   => \App\Models\Disposisi::where('status_dispo', 'pending')->count(),
+            'suratMasuk'  => \App\Models\SuratMasuk::count(),
+        ]);    
     }
 
     public function kelolaPengguna()

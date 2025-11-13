@@ -1,7 +1,7 @@
 @extends('layouts.kabag')
 
 @section('content')
-<div class="p-6">
+<div class="space-y-6">
     <h2 class="text-2xl font-bold mb-2">Selamat Datang, {{ Auth::user()->name }}</h2>
     <p class="text-gray-600 mb-8">Anda login sebagai <strong>Kabag Umum</strong>.</p>
 

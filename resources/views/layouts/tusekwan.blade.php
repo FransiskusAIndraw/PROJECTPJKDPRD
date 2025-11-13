@@ -61,7 +61,7 @@
                 </li>
             </ul>
         </nav>
-        <div class="p-4 border-t border-blue-500">
+        <div class="p-4 border-t border-blue-700">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="w-full text-left hover:bg-blue-600 rounded p-2">Logout</button>
@@ -70,7 +70,7 @@
     </aside>
 
     <main class="flex-1 overflow-y-auto">
-        <header class="bg-white shadow p-4 flex justify-between items-center">
+        <header class="bg-white shadow p-5 flex justify-between items-center">
             <h1 class="text-lg font-semibold">TU Sekretaris Dewan | {{ Auth::user()->name }}</h1>
 
             <x-notif-bell />            

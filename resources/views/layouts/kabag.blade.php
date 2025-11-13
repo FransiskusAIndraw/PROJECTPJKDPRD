@@ -42,12 +42,12 @@
         {{-- Menu --}}
         <nav class="flex-1 p-4 space-y-2">
             <a href="{{ route('kabag.' . strtolower($namaBidang) . '.dashboard') }}" 
-               class="block rounded p-2 hover:bg-blue-700 {{ request()->routeIs('kabag.' . strtolower($namaBidang) . '.dashboard') ? 'bg-blue-900' : '' }}">
+               class="block rounded p-2 hover:bg-blue-700 {{ request()->routeIs('kabag.' . strtolower($namaBidang) . '.dashboard') ? 'bg-blue-900 text-white font-semibold' : 'hover:bg-blue-600' }}">
                Dashboard
             </a>
 
             <a href="{{ route('kabag.' . strtolower($namaBidang) . '.disposisi.index') }}" 
-               class="block rounded p-2 hover:bg-blue-700 {{ request()->routeIs('kabag.' . strtolower($namaBidang) . '.disposisi.index') ? 'bg-blue-900' : '' }}">
+               class="block rounded p-2 hover:bg-blue-700 {{ request()->routeIs('kabag.' . strtolower($namaBidang) . '.disposisi.index') ? 'bg-blue-900 text-white font-semibold' : 'hover:bg-blue-600' }}">
                Daftar Disposisi
             </a>
         </nav>
@@ -65,7 +65,7 @@
 
     <!-- Main -->
     <main class="flex-1 overflow-y-auto">
-        <header class="bg-white shadow p-4 flex justify-between items-center">
+        <header class="bg-white shadow p-5 flex justify-between items-center">
             <h1 class="text-lg font-semibold">
                 Dashboard Kabag {{ $namaBidang }} | {{ Auth::user()->name }}
             </h1>
